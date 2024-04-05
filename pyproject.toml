@@ -16,3 +16,13 @@ mypy = "^1.9.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "SIM", "I"]
+ignore = ["F401"]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+strict = true
