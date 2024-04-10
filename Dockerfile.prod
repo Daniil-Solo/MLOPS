@@ -1,0 +1,8 @@
+FROM python:3.11.9-slim-bullseye
+
+WORKDIR /app
+
+RUN pip install poetry
+COPY pyproject.toml pyproject.toml
+COPY poetry.lock poetry.lock
+RUN poetry install --without dev
