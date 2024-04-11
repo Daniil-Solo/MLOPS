@@ -3,9 +3,8 @@ name: docker-push-build
 on:
   push:
     branches: [ "master" ]
-  # Build and push Docker image with Buildx (don't push on PR)
-  pull_request:
-    branches: [ "master" ]
+#  pull_request:
+#    branches: [ "master" ]
   workflow_dispatch:
 
 env:
