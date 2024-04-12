@@ -11,7 +11,7 @@ env:
   IMAGE_TAG: 1.0.${{ github.run_number }}
 
 jobs:
-  lint:
+  docs-building:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -30,12 +30,18 @@ jobs:
           export KAGGLE_KEY=${{ secrets.KAGGLE_TOKEN }}
           kaggle datasets download new-york-city/ny-2015-street-tree-census-tree-data
           unzip ny-2015-street-tree-census-tree-data.zip
-          export KAGGLE_TREE_DATA=$(pwd)/ny-2015-street-tree-census-tree-data.csv
+          export KAGGLE_TREE_DATA=$pwd/2015-street-tree-census-tree-data.csv
       - name: Convert ipynb to qmd format
         run: |
           poetry run quarto convert notebooks/kaggle_tree_eda.ipynb -o docs/kaggle_tree_eda.qmd
       - name: Generate html
-        run: poetry run quarto render docs --to html
+        run: |
+          poetry run quarto render docs --to html
+          cd docs
+      - name: Installing Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.4.515
       - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
