@@ -1,0 +1,44 @@
+name: Build docs
+
+on:
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: daniil-solo/mlops
+  IMAGE_TAG: 1.0.${{ github.run_number }}
+
+jobs:
+  docs-building:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install kaggle
+          pip install poetry
+          poetry install --with dev
+      - name: Download Kaggle dataset
+        run: |
+          export KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}
+          export KAGGLE_KEY=${{ secrets.KAGGLE_TOKEN }}
+          kaggle datasets download new-york-city/ny-2015-street-tree-census-tree-data
+          unzip ny-2015-street-tree-census-tree-data.zip
+          ls
+      - name: Convert ipynb to qmd format
+        run: |
+          poetry run quarto convert notebooks/kaggle_tree_eda.ipynb -o docs/kaggle_tree_eda.qmd
+      - name: Generate html
+        run: |
+          export KAGGLE_TREE_DATA=/home/runner/work/MLOPS/MLOPS/2015-street-tree-census-tree-data.csv
+          poetry run quarto render docs --to html
+      - name: Publish to GitHub Pages
+        run: |
+          cd docs
+          poetry run quarto publish gh-pages --no-browser --no-render
