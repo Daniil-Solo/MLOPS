@@ -26,9 +26,8 @@ jobs:
           poetry install --with dev
       - name: Download Kaggle dataset
         run: |
-          mkdir /root/.kaggle
-          echo "{\"username\":\"${{ secrets.KAGGLE_USERNAME }}\",\"key\":\"${{ secrets.KAGGLE_TOKEN }}\"}" > /root/.kaggle/kaggle.json
-          chmod 600 /root/.kaggle/kaggle.json
+          export KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}
+          export KAGGLE_KEY=${{ secrets.KAGGLE_TOKEN }}
           kaggle datasets download new-york-city/ny-2015-street-tree-census-tree-data
           unzip ny-2015-street-tree-census-tree-data.zip
           export KAGGLE_TREE_DATA=$(pwd)/ny-2015-street-tree-census-tree-data.csv
