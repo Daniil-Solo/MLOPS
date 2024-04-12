@@ -31,20 +31,16 @@ jobs:
           kaggle datasets download new-york-city/ny-2015-street-tree-census-tree-data
           unzip ny-2015-street-tree-census-tree-data.zip
           export KAGGLE_TREE_DATA=$pwd/2015-street-tree-census-tree-data.csv
+          echo $KAGGLE_TREE_DATA
       - name: Convert ipynb to qmd format
         run: |
           poetry run quarto convert notebooks/kaggle_tree_eda.ipynb -o docs/kaggle_tree_eda.qmd
       - name: Generate html
         run: |
+          export KAGGLE_TREE_DATA=$pwd/2015-street-tree-census-tree-data.csv
+          echo $KAGGLE_TREE_DATA
           poetry run quarto render docs --to html
+      - name: Generate html
+        run: |
           cd docs
-      - name: Installing Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: 1.4.515
-      - name: Publish to GitHub Pages
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          poetry run quarto publish gh-pages --no-browser --no-render
