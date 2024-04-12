@@ -28,7 +28,6 @@ jobs:
         run: |
           export KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}
           export KAGGLE_KEY=${{ secrets.KAGGLE_TOKEN }}
-          export KAGGLE_TREE_DATA=/home/runner/work/MLOPS/MLOPS/notebooks/2015-street-tree-census-tree-data.csv
           kaggle datasets download new-york-city/ny-2015-street-tree-census-tree-data
           unzip ny-2015-street-tree-census-tree-data.zip
           ls
@@ -37,6 +36,7 @@ jobs:
           poetry run quarto convert notebooks/kaggle_tree_eda.ipynb -o docs/kaggle_tree_eda.qmd
       - name: Generate html
         run: |
+          export KAGGLE_TREE_DATA=/home/runner/work/MLOPS/MLOPS/2015-street-tree-census-tree-data.csv
           poetry run quarto render docs --to html
       - name: Publish to GitHub Pages
         run: |
