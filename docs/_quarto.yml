@@ -1,0 +1,32 @@
+project:
+  type: website
+
+website:
+  title: "MLOps Course"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+    tools:
+      - icon: github
+        menu:
+          - text: Source Code
+            url: https://github.com/Daniil-Solo/MLOPS
+          - text: Actions
+            url: https://github.com/Daniil-Solo/MLOPS/actions
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Notebooks"
+        contents:
+          - href: kaggle_tree_eda.qmd
+            text: Kaggle Tree EDA
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

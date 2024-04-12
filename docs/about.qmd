@@ -1,0 +1,20 @@
+---
+title: "Daniil Solovjev"
+about:
+  template: jolla
+  image: "https://avatars.githubusercontent.com/u/80649413?s=400&v=4"
+  links:
+    - icon: telegram
+      text: Telegram
+      url: "https://t.me/daniilsolovjev"
+    - icon: envelope-at-fill
+      text: Gmail
+      url: "mailto:daniil.solo1723@gmail.com"
+    - icon: book-fill
+      text: Stepik
+      url: "https://stepik.org/users/273475945/profile"
+---
+
+I am Python Backend Developer living in the Perm.
+
+Currently I study at AI Talent Hub. I like to learn something new in programming.
