@@ -1,0 +1,15 @@
+name: Test Build Docker Image
+
+on:
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      working-directory: .
+      run: docker build -f Dockerfile.prod -t mlops-course/prod:$(date +%s) .
