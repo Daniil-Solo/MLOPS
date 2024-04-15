@@ -14,6 +14,8 @@ pandas = "^2.2.2"
 seaborn = "^0.13.2"
 folium = "^0.16.0"
 python-dotenv = "^1.0.1"
+pandas-stubs = "^2.2.1.240316"
+types-seaborn = "^0.13.2.20240311"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -21,14 +23,19 @@ ruff = "^0.3.5"
 mypy = "^1.9.0"
 pre-commit = "^3.7.0"
 jupyter = "^1.0.0"
+nbqa = "^1.8.5"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.ruff]
+line-length = 100
+extend-include = ["*.ipynb"]
+
 [tool.ruff.lint]
 select = ["E", "F", "B", "D", "SIM", "I"]
-ignore = ["F401"]
+ignore = ["F401", "D211", "D213"]
 
 [tool.pydocstyle]
 convention = "google"
