@@ -1,4 +1,4 @@
-name: docker-test-build
+name: Test Build Docker Image
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-container:
+  test-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
