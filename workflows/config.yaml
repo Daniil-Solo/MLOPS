@@ -1,0 +1,3 @@
+models: ["linear-regression", "random-forest"]
+dataset_sizes: ["small", "normal"]
+random_state: 42
