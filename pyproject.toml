@@ -16,6 +16,9 @@ folium = "^0.16.0"
 python-dotenv = "^1.0.1"
 pandas-stubs = "^2.2.1.240316"
 types-seaborn = "^0.13.2.20240311"
+snakemake = "^8.10.8"
+scikit-learn = "^1.4.2"
+click = "^8.1.7"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -24,6 +27,7 @@ mypy = "^1.9.0"
 pre-commit = "^3.7.0"
 jupyter = "^1.0.0"
 nbqa = "^1.8.5"
+kaggle = "^1.6.12"
 
 [build-system]
 requires = ["poetry-core"]
