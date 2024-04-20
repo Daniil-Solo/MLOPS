@@ -46,3 +46,5 @@ convention = "google"
 
 [tool.mypy]
 strict = true
+warn_unused_ignores = false
+disable_error_code = "import-untyped"
