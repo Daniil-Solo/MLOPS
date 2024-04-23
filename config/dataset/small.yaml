@@ -1,0 +1,3 @@
+name: small
+columns: [isGP,isMale,repChoice,traveltime,studytime,failures,wantsHSE]
+target: G3
