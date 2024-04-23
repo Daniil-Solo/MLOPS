@@ -22,6 +22,10 @@ def cli(input_dataset_file: str, output_dataset_file: str) -> None:
     df["wantsHSE"] = df["higher"].apply(lambda x: x == "yes").astype("int32")
     df["hasInternet"] = df["internet"].apply(lambda x: x == "yes").astype("int32")
     df["hasRomantic"] = df["romantic"].apply(lambda x: x == "yes").astype("int32")
+    df = df.drop(
+        labels=["school", "sex", "famsize", "reason", "higher", "internet", "romantic"],
+        axis=1,
+    )
     df.to_csv(output_dataset_file, index=False)
     print("prepared dataset saved as", output_dataset_file)
 
