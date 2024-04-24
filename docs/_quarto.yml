@@ -25,7 +25,7 @@ website:
           - href: kaggle_tree_eda.qmd
             text: Kaggle Tree EDA
           - href: snake_make_workflow
-            text: Snakemake workflow
+            text: Пайплайн (Snakemake + Hydra)
 
 format:
   html:
