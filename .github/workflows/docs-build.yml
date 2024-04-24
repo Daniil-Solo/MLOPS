@@ -43,6 +43,7 @@ jobs:
       - name: Generate html
         run: |
           export KAGGLE_TREE_DATA=/home/runner/work/MLOPS/MLOPS/2015-street-tree-census-tree-data.csv
+          export NUMBER_OF_PROCESSORS=16
           poetry run quarto render docs --to html
       - name: Publish to GitHub Pages
         run: |
