@@ -1,0 +1,3 @@
+name: normal
+columns: [isGP,isMale,le3FamSize,Medu,Fedu,repChoice,traveltime,studytime,failures,wantsHSE,hasInternet,freetime,goout,Dalc,Walc,health,absences]
+target: G3
