@@ -8,7 +8,7 @@
 
 <meta name="author" content="Daniil Solovjev">
 
-<title>MLOps Course - Пайплайн (Snakemake + Hydra)</title>
+<title>MLOps Course - Пайплайн (DVC)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Пайплайн (Snakemake + Hydra)</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./kaggle_tree_eda.html">Исследования</a></li><li class="breadcrumb-item"><a href="./dvc_experiment.html">Пайплайн (DVC)</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -200,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dvc_experiment.html" class="sidebar-item-text sidebar-link">
+  <a href="./dvc_experiment.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Пайплайн (DVC)</span></a>
   </div>
 </li>
@@ -216,20 +216,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#данные" id="toc-данные" class="nav-link active" data-scroll-target="#данные">Данные</a></li>
-  <li><a href="#модели" id="toc-модели" class="nav-link" data-scroll-target="#модели">Модели</a></li>
-  <li><a href="#пайплайн" id="toc-пайплайн" class="nav-link" data-scroll-target="#пайплайн">Пайплайн</a></li>
-  <li><a href="#переменные-окружения" id="toc-переменные-окружения" class="nav-link" data-scroll-target="#переменные-окружения">Переменные окружения</a></li>
-  <li><a href="#команды" id="toc-команды" class="nav-link" data-scroll-target="#команды">Команды</a></li>
+  <li><a href="#описание-пайплайна" id="toc-описание-пайплайна" class="nav-link active" data-scroll-target="#описание-пайплайна">Описание пайплайна</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./kaggle_tree_eda.html">Исследования</a></li><li class="breadcrumb-item"><a href="./dvc_experiment.html">Пайплайн (DVC)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Пайплайн (Snakemake + Hydra)</h1>
+<h1 class="title">Пайплайн (DVC)</h1>
 </div>
 
 
@@ -252,82 +248,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="данные" class="level2">
-<h2 class="anchored" data-anchor-id="данные">Данные</h2>
-<p>В этом пайплайне используется следующий <a href="https://www.kaggle.com/datasets/uciml/student-alcohol-consumption">датасет</a></p>
-<p>В нем содержится информация о студентах: их демографические данные и успеваемость.</p>
-<p>Цель - предсказать итоговую оценку учащегося от 0 до 20.</p>
-<p>Данные подготавливаются в двух вариантах, отличающиеся количеством используемых признаков.</p>
-<p>Используемые столбцы для датасетов берутся из конфигов с помощью Hydra.</p>
-</section>
-<section id="модели" class="level2">
-<h2 class="anchored" data-anchor-id="модели">Модели</h2>
-<p>В рамках пайплайна обучаются модели:</p>
+<section id="описание-пайплайна" class="level2">
+<h2 class="anchored" data-anchor-id="описание-пайплайна">Описание пайплайна</h2>
+<p>Используются текстовые данные отзывов.</p>
+<p>Стадии пайплайна:</p>
 <ul>
-<li>Линейная регрессия;</li>
-<li>Случайный лес.</li>
+<li>подготовка текстовых данных (приведение к нижнему регистру, стемминг и др.)</li>
+<li>подготовка tf-idf фичей</li>
+<li>обучение модели на тренировочных данных</li>
+<li>оценка модели на тестовых данных</li>
 </ul>
-<p>Параметры моделей берутся из конфигов с помощью Hydra.</p>
-</section>
-<section id="пайплайн" class="level2">
-<h2 class="anchored" data-anchor-id="пайплайн">Пайплайн</h2>
-<p>Граф пайплайна представлен на рисунке <a href="#fig-dag" class="quarto-xref">Figure&nbsp;1</a>.</p>
-<div id="cell-fig-dag" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-24T19:24:32.489854400Z&quot;,&quot;start_time&quot;:&quot;2024-04-24T19:24:31.015724700Z&quot;}" data-execution_count="1">
+<p>Изображения пайплайна представлены на рисунках <a href="#fig-dag-1" class="quarto-xref">Figure&nbsp;1</a> и <a href="#fig-dag-2" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div id="cell-fig-dag-1" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-05-05T12:18:28.858144100Z&quot;,&quot;start_time&quot;:&quot;2024-05-05T12:18:27.680810100Z&quot;}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>PIPELINE_IMAGE_FILENAME <span class="op">=</span> <span class="st">"pipeline.png"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Running</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>COMMAND <span class="op">=</span> <span class="st">'poetry run snakemake --dag -s "./../Snakefile" --configfile "./../workflows/config.yaml"'</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>COMMAND <span class="op">+=</span> <span class="ss">f' | dot -T png &gt; </span><span class="sc">{</span>PIPELINE_IMAGE_FILENAME<span class="sc">}</span><span class="ss">'</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>subprocess.run(COMMAND, shell<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize dag</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Image.<span class="bu">open</span>(PIPELINE_IMAGE_FILENAME)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ax.imshow(img)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>ax.axes.xaxis.set_visible(<span class="va">False</span>)  <span class="co"># type: ignore[union-attr]</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>ax.axes.yaxis.set_visible(<span class="va">False</span>)  <span class="co"># type: ignore[union-attr]</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"top"</span>].set_visible(<span class="va">False</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"right"</span>].set_visible(<span class="va">False</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"bottom"</span>].set_visible(<span class="va">False</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"left"</span>].set_visible(<span class="va">False</span>)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> graphviz</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>current_dir <span class="op">=</span> Path(os.getcwd())</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>work_dir <span class="op">=</span> current_dir.parent</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>COMMAND <span class="op">=</span> <span class="st">"dvc dag --dot"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> subprocess.run(COMMAND, shell<span class="op">=</span><span class="va">True</span>, cwd<span class="op">=</span>work_dir, capture_output <span class="op">=</span> <span class="va">True</span>, text <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> result.stdout.replace(<span class="st">"</span><span class="ch">\\</span><span class="st">"</span>, <span class="st">"/"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> graphviz.Source(text, <span class="bu">format</span><span class="op">=</span><span class="st">"png"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Building DAG of jobs...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div id="fig-dag" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div id="fig-dag-1" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="snake_make_workflow_files/figure-html/fig-dag-output-2.png" width="763" height="444" class="figure-img">
+<div aria-describedby="fig-dag-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="dvc_experiment_files/figure-html/fig-dag-1-output-1.svg" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Пайплайн
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Пайплайн с отображением стадий
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="переменные-окружения" class="level2">
-<h2 class="anchored" data-anchor-id="переменные-окружения">Переменные окружения</h2>
-<p>Для работы необходимо задать следующие переменные окружения (в Windows они установлены по умолчанию)</p>
-<pre class="env"><code>NUMBER_OF_PROCESSORS=16</code></pre>
-</section>
-<section id="команды" class="level2">
-<h2 class="anchored" data-anchor-id="команды">Команды</h2>
-<p>Генерация изображения пайплайна</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> run snakemake <span class="at">--dag</span> <span class="kw">|</span> <span class="ex">dot</span> <span class="at">-T</span> png <span class="op">&gt;</span> pipeline.png</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Запуск пайплайна</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> run snakemake <span class="at">--cores</span> 16 all </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-fig-dag-2" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-05-05T12:18:30.020980200Z&quot;,&quot;start_time&quot;:&quot;2024-05-05T12:18:28.857144200Z&quot;}" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> graphviz</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>current_dir <span class="op">=</span> Path(os.getcwd())</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>work_dir <span class="op">=</span> current_dir.parent</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>COMMAND <span class="op">=</span> <span class="st">"dvc dag --dot --outs"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> subprocess.run(COMMAND, shell<span class="op">=</span><span class="va">True</span>, cwd<span class="op">=</span>work_dir, capture_output <span class="op">=</span> <span class="va">True</span>, text <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> result.stdout.replace(<span class="st">"</span><span class="ch">\\</span><span class="st">"</span>, <span class="st">"/"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> graphviz.Source(text, <span class="bu">format</span><span class="op">=</span><span class="st">"png"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div id="fig-dag-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dag-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="dvc_experiment_files/figure-html/fig-dag-2-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Пайплайн с отображением файлов
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
