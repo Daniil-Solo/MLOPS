@@ -1,0 +1,45 @@
+stages:
+  prepare:
+    foreach:
+      - train
+      - test
+    do:
+      cmd: python dvc_scripts/preprocessing.py data/raw-${item}.csv data/prepared-${item}.csv
+      deps:
+        - data/raw-${item}.csv
+        - dvc_scripts/preprocessing.py
+      outs:
+        - data/prepared-${item}.csv
+
+  featurize:
+    cmd: python dvc_scripts/feature_engineering.py data/prepared-train.csv data/prepared-test.csv data/feature-train.npz data/feature-test.npz
+    params:
+      - tf_idf
+    deps:
+      - data/prepared-train.csv
+      - data/prepared-test.csv
+      - dvc_scripts/feature_engineering.py
+    outs:
+      - data/feature-train.npz
+      - data/feature-test.npz
+
+  fit_model:
+    cmd: python dvc_scripts/fit.py data/prepared-train.csv data/feature-train.npz data/model.pkl
+    params:
+      - random_forest
+    deps:
+      - data/prepared-train.csv
+      - data/feature-train.npz
+      - dvc_scripts/fit.py
+    outs:
+      - data/model.pkl
+
+  evaluate_model:
+    cmd: python dvc_scripts/evaluate.py data/prepared-test.csv data/feature-test.npz data/model.pkl data/metrics.json
+    deps:
+      - data/prepared-test.csv
+      - data/feature-test.npz
+      - data/model.pkl
+      - dvc_scripts/evaluate.py
+    metrics:
+      - data/metrics.json

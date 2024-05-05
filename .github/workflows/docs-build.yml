@@ -40,6 +40,7 @@ jobs:
         run: |
           poetry run quarto convert notebooks/kaggle_tree_eda.ipynb -o docs/kaggle_tree_eda.qmd
           poetry run quarto convert notebooks/snake_make_workflow.ipynb -o docs/snake_make_workflow.qmd
+          poetry run quarto convert notebooks/dvc_experiment.ipynb -o docs/dvc_experiment.qmd
       - name: Generate html
         run: |
           export KAGGLE_TREE_DATA=/home/runner/work/MLOPS/MLOPS/2015-street-tree-census-tree-data.csv
