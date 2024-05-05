@@ -20,12 +20,14 @@ website:
     style: "docked"
     search: true
     contents:
-      - section: "Notebooks"
+      - section: "Исследования"
         contents:
           - href: kaggle_tree_eda.qmd
-            text: Kaggle Tree EDA
+            text: Разведочный анализ данных
           - href: snake_make_workflow
             text: Пайплайн (Snakemake + Hydra)
+          - href: dvc_experiment.qmd
+            text: Пайплайн (DVC)
 
 format:
   html:
