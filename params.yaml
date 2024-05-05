@@ -1,0 +1,9 @@
+random_state: 0
+
+tf_idf:
+    max_features: 1500
+    stop_words: "english"
+
+logistic_regression:
+    max_iter: 1000
+    penalty: "l2"

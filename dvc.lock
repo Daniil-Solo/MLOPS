@@ -1,0 +1,147 @@
+schema: '2.0'
+stages:
+  prepare_test:
+    cmd: python dvc_scripts/preprocessing.py data/raw-test.csv data/prepared-test.csv
+    deps:
+    - path: data/raw-test.csv
+      hash: md5
+      md5: f4c8bded2ecbde5f996b675db6228f16
+      size: 176046679
+    - path: dvc_scripts/preprocessing.py
+      hash: md5
+      md5: 67bcd2d9c7de02803e3fb842cc6c4869
+      size: 1971
+    outs:
+    - path: data/prepared-test.csv
+      hash: md5
+      md5: 1d4644c485d193fdfbd4388d620c60a0
+      size: 151752400
+  prepare_train:
+    cmd: python dvc_scripts/preprocessing.py data/raw-train.csv data/prepared-train.csv
+    deps:
+    - path: data/raw-train.csv
+      hash: md5
+      md5: 520937107c39a2d1d1f66cd410e9ed9e
+      size: 1585200224
+    - path: dvc_scripts/preprocessing.py
+      hash: md5
+      md5: 67bcd2d9c7de02803e3fb842cc6c4869
+      size: 1971
+    outs:
+    - path: data/prepared-train.csv
+      hash: md5
+      md5: 1a431b6787a07b2f1b7409eed61ea87c
+      size: 1366435787
+  featurize:
+    cmd: python dvc_scripts/feature_engineering.py data/prepared-train.csv data/prepared-test.csv
+      data/feature-train.npz data/feature-test.npz
+    deps:
+    - path: data/prepared-test.csv
+      hash: md5
+      md5: 1d4644c485d193fdfbd4388d620c60a0
+      size: 151752400
+    - path: data/prepared-train.csv
+      hash: md5
+      md5: 1a431b6787a07b2f1b7409eed61ea87c
+      size: 1366435787
+    - path: dvc_scripts/feature_engineering.py
+      hash: md5
+      md5: 22d61088b1dbe957c7aadf88bade903c
+      size: 1767
+    params:
+      params.yaml:
+        tf_idf:
+          max_features: 1500
+          stop_words: english
+    outs:
+    - path: data/feature-test.npz
+      hash: md5
+      md5: 368ddcc7124841e5b77b4c9cd68c8dcf
+      size: 85163777
+    - path: data/feature-train.npz
+      hash: md5
+      md5: c9d642f01b51f5215a1b8b878068a19c
+      size: 763460691
+  fit_model:
+    cmd: python dvc_scripts/fit.py data/prepared-train.csv data/feature-train.npz
+      data/model.pkl
+    deps:
+    - path: data/feature-train.npz
+      hash: md5
+      md5: c9d642f01b51f5215a1b8b878068a19c
+      size: 763460691
+    - path: data/prepared-train.csv
+      hash: md5
+      md5: 1a431b6787a07b2f1b7409eed61ea87c
+      size: 1366435787
+    - path: dvc_scripts/fit.py
+      hash: md5
+      md5: 7dd73877b2ee0a1ece5932ac9087744c
+      size: 1263
+    params:
+      params.yaml:
+        logistic_regression:
+          max_iter: 1000
+          penalty: l2
+    outs:
+    - path: data/model.pkl
+      hash: md5
+      md5: 61fd191a60ce53aa6fd50b7686d49f12
+      size: 12715
+  evaluate_model:
+    cmd: python dvc_scripts/evaluate.py data/prepared-test.csv data/feature-test.npz
+      data/model.pkl data/metrics.json
+    deps:
+    - path: data/feature-test.npz
+      hash: md5
+      md5: 368ddcc7124841e5b77b4c9cd68c8dcf
+      size: 85163777
+    - path: data/model.pkl
+      hash: md5
+      md5: 61fd191a60ce53aa6fd50b7686d49f12
+      size: 12715
+    - path: data/prepared-test.csv
+      hash: md5
+      md5: 1d4644c485d193fdfbd4388d620c60a0
+      size: 151752400
+    - path: dvc_scripts/evaluate.py
+      hash: md5
+      md5: 4631553d964967e07300251db737781d
+      size: 1522
+    outs:
+    - path: data/metrics.json
+      hash: md5
+      md5: 0db1462c60efd8cd455667d48c208030
+      size: 74
+  prepare@train:
+    cmd: python dvc_scripts/preprocessing.py data/raw-train.csv data/prepared-train.csv
+    deps:
+    - path: data/raw-train.csv
+      hash: md5
+      md5: 520937107c39a2d1d1f66cd410e9ed9e
+      size: 1585200224
+    - path: dvc_scripts/preprocessing.py
+      hash: md5
+      md5: 91fd02c8fbdce3ea78d9d2b2804b107c
+      size: 2018
+    outs:
+    - path: data/prepared-train.csv
+      hash: md5
+      md5: 1a431b6787a07b2f1b7409eed61ea87c
+      size: 1366435787
+  prepare@test:
+    cmd: python dvc_scripts/preprocessing.py data/raw-test.csv data/prepared-test.csv
+    deps:
+    - path: data/raw-test.csv
+      hash: md5
+      md5: f4c8bded2ecbde5f996b675db6228f16
+      size: 176046679
+    - path: dvc_scripts/preprocessing.py
+      hash: md5
+      md5: 91fd02c8fbdce3ea78d9d2b2804b107c
+      size: 2018
+    outs:
+    - path: data/prepared-test.csv
+      hash: md5
+      md5: 1d4644c485d193fdfbd4388d620c60a0
+      size: 151752400
