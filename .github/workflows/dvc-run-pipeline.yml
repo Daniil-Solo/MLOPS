@@ -20,4 +20,5 @@ jobs:
           poetry install --without dev
       - name: Run pipeline
         run: |
+          poetry run dvc checkout
           poetry run dvc repro
