@@ -1,2 +1,8 @@
 /raw-test.csv
 /raw-train.csv
+/prepared-test.csv
+/prepared-train.csv
+/feature-train.npz
+/feature-test.npz
+/metrics.json
+/model.pkl
