@@ -76,18 +76,19 @@ stages:
       size: 1366435787
     - path: dvc_scripts/fit.py
       hash: md5
-      md5: 8320256894b9df68bd7144c185bfb283
-      size: 1265
+      md5: a18222c1479b589de22da86454c8ff6d
+      size: 1263
     params:
       params.yaml:
-        logistic_regression:
-          max_iter: 1000
-          penalty: l2
+        random_forest:
+          n_estimators: 60
+          max_depth: 12
+          n_jobs: 10
     outs:
     - path: data/model.pkl
       hash: md5
-      md5: 61fd191a60ce53aa6fd50b7686d49f12
-      size: 12715
+      md5: 21d69dc7706962caf9e199cd840fcc51
+      size: 7253258
   evaluate_model:
     cmd: python dvc_scripts/evaluate.py data/prepared-test.csv data/feature-test.npz
       data/model.pkl data/metrics.json
@@ -98,8 +99,8 @@ stages:
       size: 85163777
     - path: data/model.pkl
       hash: md5
-      md5: 61fd191a60ce53aa6fd50b7686d49f12
-      size: 12715
+      md5: 21d69dc7706962caf9e199cd840fcc51
+      size: 7253258
     - path: data/prepared-test.csv
       hash: md5
       md5: 1d4644c485d193fdfbd4388d620c60a0
@@ -111,8 +112,8 @@ stages:
     outs:
     - path: data/metrics.json
       hash: md5
-      md5: 0db1462c60efd8cd455667d48c208030
-      size: 74
+      md5: 75059ed081e9a800d0c62ca09c64f41d
+      size: 75
   prepare@train:
     cmd: python dvc_scripts/preprocessing.py data/raw-train.csv data/prepared-train.csv
     deps:
