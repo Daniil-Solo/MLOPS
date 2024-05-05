@@ -1,4 +1,4 @@
-name: Build docs
+name: Run dvc pipeline
 
 on:
   pull_request:
@@ -20,4 +20,4 @@ jobs:
           poetry install --without dev
       - name: Run pipeline
         run: |
-          dvc repro
+          poetry run dvc repro
